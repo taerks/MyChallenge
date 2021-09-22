@@ -13,7 +13,7 @@ protocol MainViewControllerDelegate {
     func toggleMenu()
 }
 
-final class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class MainViewController: UIViewController {
     
     //MARK: - variables
     let realm = try! Realm()
@@ -23,33 +23,6 @@ final class MainViewController: UIViewController, UITableViewDelegate, UITableVi
     //MARK: - outlets
     @IBOutlet weak var mainTableView: UITableView!
     @IBOutlet weak var SlaboLabel: UILabel!
-    
-    //MARK: - TableView data source
-    internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    internal func numberOfSections(in tableView: UITableView) -> Int {
-        if goals == nil {
-            return 0
-        }
-        return goals.count
-    }
-    
-    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "mainCell", for: indexPath) as! MainTableViewCell
-        let goal = goals[indexPath.section]
-        cell.cellDecription(cell: goal)
-        return cell
-    }
-    
-    internal func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 130
-    }
-    
-    internal func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 5
-    }
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -62,7 +35,7 @@ final class MainViewController: UIViewController, UITableViewDelegate, UITableVi
         delegate?.toggleMenu()
     }
     
-    //MARK:- Segue
+    //MARK: - Router
     @IBAction func unwindSegue(segue: UIStoryboardSegue) {
         mainTableView.reloadData()
     }
@@ -77,3 +50,31 @@ final class MainViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 }
 
+//MARK: - UITableViewDelegate, UITableViewDataSource
+extension MainViewController: UITableViewDelegate, UITableViewDataSource{
+    internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if goals == nil {
+            return 0
+        }
+        return goals.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mainCell", for: indexPath) as! MainTableViewCell
+        let goal = goals[indexPath.section]
+        cell.cellDecription(cell: goal)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 130
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5
+    }
+}

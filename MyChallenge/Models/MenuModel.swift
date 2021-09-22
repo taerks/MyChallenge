@@ -5,10 +5,9 @@
 //  Created by Антон Ермолов on 20.09.2021.
 //
 
-import Foundation
 import UIKit
 
-enum MenuModel: Int, CustomStringConvertible {
+enum MenuModel: Int {
     
     case Archiv
     case Contacts
@@ -19,7 +18,6 @@ enum MenuModel: Int, CustomStringConvertible {
         case .Archiv: return "Archive"
         case .Contacts: return "Contacts"
         case .Settings: return "Settings"
-            
         }
     }
     
@@ -28,9 +26,7 @@ enum MenuModel: Int, CustomStringConvertible {
         case .Archiv: return UIImage(named: "Archive") ?? UIImage()
         case .Contacts: return UIImage(named: "Contacts") ?? UIImage()
         case .Settings: return UIImage(named: "Settings") ?? UIImage()
-            
         }
     }
-    
 }
 
